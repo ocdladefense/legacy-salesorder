@@ -1,0 +1,44 @@
+<?php
+
+
+function salesorder_menu()
+{
+	$items = array();
+	
+	$items['salesOrderApp'] = array(
+		'title' => 'SalesOrderApp',
+		'comment' => 'Base router/loader for Saleforce directory.',
+		// 'access' => 'user_is_authenticated',
+		// 'access arguments' => array('admin'),
+		'page callback' => 'salesOrderApp',
+		// 'output handler' => 'json',
+		'files' => array(
+			// 'dependency' => '/path/to/authorize/dot/net/library',
+			'controller' => 'includes/SalesOrderController.php'
+		),
+		'theme' => 'ocdla2',
+		'routeClass' => 'SalesOrderController'
+	);	
+	
+	$items['json/%dataStore'] = array(
+		'title' => 'SalesOrderApp',
+		'comment' => 'Base router/loader for Saleforce directory.',
+		'page arguments' => array(1),
+		// 'access' => 'user_is_authenticated',
+		// 'access arguments' => array('admin'),
+		'page callback' => 'getJsonData',
+		'output handler' => 'json',
+		// This should be a documented set of arguments
+		// specific to, and valid for the specified output handler.
+		'output handler arguments' => array('json_encode' => false),
+		'files' => array(
+			// 'dependency' => '/path/to/authorize/dot/net/library',
+			'controller' => 'includes/SalesOrderController.php'
+		),
+		'theme' => 'ocdla2',
+		'routeClass' => 'SalesOrderController'
+	);	
+
+	
+	return $items;
+}

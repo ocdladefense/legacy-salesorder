@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Template for rending an Order and Order Items</title>
+	</head>
+	<body>
+		<style type="text/css">
+			.order-form .order-number {
+				font-size:1.8em;
+			}
+			
+			.order-form .order-account {
+				font-size:1.4em;
+			}
+			
+			.error {
+				background-color:red !important;
+				font-weight:bold;
+				color:#fff;
+			}
+			
+			input[name="UnitPriceString"],
+			input[name="TotalPriceString"] {
+				text-align:right;
+			}
+			
+			.order-messages {
+				position:absolute;
+				right:0px;
+				top:0px;
+			}
+			
+			.order-message {
+				padding:6px;
+				margin-bottom:3px;
+			}
+			
+			.order-form .order-created-date {
+				background-color:yellow;
+				border-radius:4px;
+			}
+			
+			.order-form .order-activated-date {
+				background-color:green;
+				border-radius:4px;
+				color:#fff;
+			}
+			
+			.order-table {
+				border-collapse: collapse;
+				margin-top:25px;
+			}
+			
+			#order-items .cell input {
+				border:none;
+				width:100%;
+				height:100%;
+			}
+			
+			.table {
+				display:table;
+				width:100%;
+			}
+			
+			.row {
+				display:table-row;
+			}
+			
+			.row:hover, .row *:hover {
+				background-color:rgba(240,240,240,0.3);
+				/* cursor:pointer; */
+			}
+			
+			.row-active, .row-active:hover {
+				background-color:#eee !important;
+				cursor:pointer;
+			}
+			
+			.cell {
+				display:table-cell;
+				border:0.5px solid grey;
+				padding:3px;
+				padding-left:8px;
+				padding-right:8px;
+				width:125px;
+				height:27px;
+				vertical-align:middle;
+				background-color:inherit;
+			}
+			
+			.cell * {
+				background-color:inherit;
+			}
+			
+			.cell-hidden {
+				display:none;
+			}
+			
+			.cell-label {
+				font-weight:bold;
+				position:relative;
+			}
+
+			
+			.resize {
+				background-color: transparent;
+				position: absolute;
+				top: 0px;
+				right: 0;
+				width: 4px;
+				height: 100%;
+				cursor: e-resize;
+			}
+		</style>
+		<form class="order-form order-{{Id}}" id="order-form-{{Id}}" autocomplete="false">
+			<input type="hidden" autocomplete="false" name="hidden" style="display:none;" />
+			<div class="order-number">Order #{{OrderNumber}}</div>
+			<div class="order-account">{{BillToContact.FirstName}} {{BillToContact.LastName}}, {{Account.Name}}</div>
+			<div class="order-TotalAmount">{{TotalAmount}}</div>
+			
+
+			<div class="order-messages">
+				{{if(isPosted)}}
+						<div class="order-message order-activated-date">Activated {{ActivatedDate}}, by {{ActivatedBy.Name}}</div>
+						<div class="order-message error">!! This Order has been activated.  It cannot be modified unless you <a style="color:#fff; text-decoration:none;" data-route-path="deactivate" data-order-id="{{Id}}">place it back into Draft status.</a></div>
+				{{fi}}
+				{{if(isDraft)}}
+					<div class="order-message order-created-date">Created {{CreatedDate}}, by {{CreatedBy.Name}}</div>
+				{{fi}}
+			</div>
+
+			
+
+
+
+		
+			<div class="order-table">
+				{{template(OrderItemLabels)}}
+				<ul class="row">
+					<li class="cell cell-label"><div>Actions<div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Contact</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Expiry</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Product</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Line Description</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Note 1</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Note 2</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Note 3</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Unit Price</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Qty</a><div class="resize" /></div></li>
+					<li class="cell cell-label"><div><a href="#" data-sort-order="asc">Sub Total</a><div class="resize" /></div></li>
+				</ul>
+				
+				<!-- 			<input type="hidden" autocomplete="false" name="hidden" style="display:none;" /> -->
+				{{foreach(Items)}}
+					<ul data-cid="{{cid}}" class="row">
+						<li class="cell actions">
+							<a data-route-path="delete-order-item" href="#">Remove</a>
+						</li>
+				
+						<!--{{template(OrderItemTemplate)}}-->
+				
+						<li class="cell cell-hidden"> 
+							<input class="line-item-Id" type="hidden" data-field-name="Id" name="Id" value="{{LineId}}" />
+							<input class="line-item-OrderId" type="hidden" data-field-name="OrderId" name="OrderId" value="{{OrderId}}" />
+							<input class="line-item-Contact__c" type="hidden" data-field-name="Contact__c" name="Contact__c" value="{{Contact__c}}" />
+							<input class="item-PricebookEntryId" type="hidden" data-field-name="PricebookEntryId"  name="PricebookEntryId" value="{{PricebookEntryId}}" />
+							<input size="5" name="TotalPrice" data-field-name="TotalPrice" type="hidden" value="{{TotalPrice}}" readonly="readonly" />
+							<input size="5" name="UnitPrice" data-field-name="UnitPrice" type="hidden" value="{{UnitPrice}}" readonly="readonly" />
+						</li>
+			
+			
+			
+						<li class="cell line-item line-item-item">
+							<input autocomplete="off" size="12" type="text" name="ContactName" class="line-item-full-name" data-field-name="ContactName" placeholder="Enter a name" value="{{Contact__r.Name}}" />
+						</li>
+						
+						<li class="cell line-item line-item-item">
+							<input autocomplete="off" size="12" type="text" name="Expiry" class="line-item-member-expiry" data-field-name="Expiry" placeholder="" value="{{MembershipExpiration}}" />
+						</li>
+
+						<li class="cell line-item line-item-item">
+							<input autocomplete="off" size="25" class="item-Product2--Name" type="text" data-field-name="ItemName" placeholder="Enter a product" name="ProductName" value="{{Product2.Name}}" />
+						</li>
+			
+						<li class="cell line-item line-item-Description">
+							<input size="34" type="text" data-field-name="Description" name="Description" placeholder="Enter a line description" value="{{Description}}" />
+						</li>
+			
+						<li class="cell line-item line-item-note line-item-ocdla-note-1">
+							<input size="6" type="text" name="Note_1__c" data-field-name="Note_1__c" value="{{Note_1__c}}" />
+						</li>
+			
+						<li class="cell line-item line-item-note line-item-ocdla-note-1">
+							<input size="6" type="text" name="Note_2__c" data-field-name="Note_2__c" value="{{Note_2__c}}" />
+						</li>
+			
+						<li class="cell line-item line-item-note line-item-ocdla-note-1">
+							<input size="6" type="text" name="Note_3__c" data-field-name="Note_3__c" value="{{Note_3__c}}" />
+						</li>
+			
+						<li class="cell line-item line-item-price">
+							<input size="4" type="text" placeholder="Enter a product" data-field-name="UnitPrice" name="UnitPriceString" value="{{UnitPriceString}}" />
+						</li>
+				
+						<li class="cell line-item line-item-Quantity">
+							<input size="2" type="text" data-field-name="Quantity" name="Quantity" value="{{Quantity}}" />
+						</li>
+				
+
+						<li class="cell line-item line-item-subtotal">
+							<input size="5" name="TotalPriceString" data-field-name="TotalPriceString" type="text" value="{{TotalPriceString}}" readonly="readonly" />
+						</li>
+					</ul>
+				{{endforeach}}
+			</div>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Template for rending an Order Item (used for empty Orders)</title>
+	</head>
+	<body>
+
+		<ul data-cid="{{cid}}" class="row">
+			<li class="cell actions">
+				<a href="#">Remove</a>
+			</li>
+		
+			<li class="cell cell-hidden"> 
+				<input class="line-item-Id" type="hidden" data-field-name="Id" name="Id" value="{{Id}}" />
+				<input class="line-item-OrderId" type="hidden" data-field-name="OrderId" name="OrderId" value="{{OrderId}}" />
+				<input class="line-item-Contact__c" type="hidden" data-field-name="Contact__c" name="Contact__c" value="{{Contact__c}}" />
+				<input class="item-PricebookEntryId" type="hidden" data-field-name="PricebookEntryId"  name="PricebookEntryId" value="{{PricebookEntryId}}" />
+			</li>
+	
+	
+	
+			<li class="cell line-item line-item-item">
+				<input autocomplete="false" size="12" type="text" name="ContactName" class="line-item-full-name" data-field-name="ContactName" placeholder="Enter a name" value="{{Contact__r.Name}}" />
+			</li>
+			
+			<li class="cell line-item line-item-item">
+				<input autocomplete="off" size="12" type="text" name="Expiry" class="line-item-member-expiry" data-field-name="Expiry" placeholder="" value="{{MembershipExpiration}}" />
+			</li>
+
+			<li class="cell line-item line-item-item">
+				<input autocomplete="off"  size="25" class="item-Product2--Name" type="text" data-field-name="ItemName" placeholder="Enter a product" name="ProductName" value="{{Product2.Name}}" />
+			</li>
+	
+			<li class="cell line-item line-item-Description">
+				<input size="34" type="text" data-field-name="Description" name="Description" placeholder="Enter a line description" value="{{Description}}" />
+			</li>
+	
+			<li class="cell line-item line-item-note line-item-ocdla-note-1">
+				<input size="6" type="text" name="Note_1__c" data-field-name="Note_1__c" value="{{Note_1__c}}" />
+			</li>
+	
+			<li class="cell line-item line-item-note line-item-ocdla-note-1">
+				<input size="6" type="text" name="Note_2__c" data-field-name="Note_2__c" value="{{Note_2__c}}" />
+			</li>
+	
+			<li class="cell line-item line-item-note line-item-ocdla-note-1">
+				<input size="6" type="text" name="Note_3__c" data-field-name="Note_3__c" value="{{Note_3__c}}" />
+			</li>
+	
+			<li class="cell line-item line-item-price">
+				<input size="4" type="text" placeholder="Enter a product" data-field-name="UnitPrice" name="UnitPrice" value="{{UnitPrice}}" />
+			</li>
+		
+			<li class="cell line-item line-item-Quantity">
+				<input size="2" type="text" data-field-name="Quantity" name="Quantity" value="{{Quantity}}" />
+			</li>
+		
+			<li class="cell line-item line-item-subtotal">
+				<input size="5" name="TotalPrice" data-field-name="TotalPrice" type="text" value="{{TotalPrice}}" readonly="readonly" />
+			</li>
+		</ul>
+
+	</body>
+</html>

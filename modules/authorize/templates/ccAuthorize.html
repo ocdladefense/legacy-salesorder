@@ -1,0 +1,285 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+
+	<style type="text/css">
+		.form-item {
+			padding:5px;
+		}
+		
+		fieldset {
+			display:inline-block;
+			vertical-align:top;
+		}
+		
+		label {
+			margin-right:8px;
+		}
+		
+		label:after {
+			content: ': ';
+		}
+		
+		input[type="radio"] + label:after {
+			content: '';
+		}
+		
+		label + input[type="radio"] {
+			margin-right:4px;
+		}
+		
+		.order-total,.order-contact {
+			font-size: 1.4em;
+		}
+		
+		a:link, a:visited, a:active {
+			color:blue;
+			text-decoration:none;
+		}
+		
+		a:hover {
+			text-decoration:hover;
+		}
+		
+		.modal-content {
+			position:relative;
+		}
+		
+		.modal-order-status {
+			position:absolute;
+			top:0px;
+			right:0px;
+		}
+		
+		.form-item-hidden {
+			display:none;
+		}
+		
+		.activated-date {
+			color:red;
+		}
+	</style>
+	
+	
+<div id="modal-sales-order-payment-info" class="modal-content">
+
+	
+
+	<div class="modal-title">Order #<a target="_new" href="/{{Id}}">{{OrderNumber}}</a></div>
+	<div class="order-total">Total: {{TotalAmount}}</div>
+	<div class="order-contact"><a title="Go to {{FullName}}'s Contact record." href="/{{BillToContactId}}" target="_new">{{FullName}}</a> &mdash; <a title="Go to {{AccountName}}'s Account record." href="/{{AccountId}}" target="_new">{{AccountName}}</a></div>
+	{{if(isPosted)}}<span class="modal-order-status activated-date">This Order was POSTED on {{ActivatedDate}}</span>{{fi}}
+	{{if(isDraft)}}<div class='modal-order-status'>This is a DRAFT Order - it has not been posted.</div>{{fi}}
+	<div id="modal-tabs">
+
+		<div id="modal-tabs-1">
+			<form title="Process Payment" onsubmit="return false;" class="sales-order-form" id="clickpdx-cc-form">
+				
+				<fieldset id="authorize__order-info">
+					<legend>Order Information</legend>
+					
+					<div class="form-item form-item-hidden form-item-Id">
+						<label for="Id">Id</label>
+						<input type="text" name="Id" value="{{Id}}" id="Id" size="20" />
+					</div>
+
+					<div class="form-item">
+						<label for="OrderStatus">Status</label>
+						<select name="OrderStatus" id="OrderStatus">
+							{{Status}}
+						</select>
+					</div>
+					
+					<div class="form-item">
+						<label for="Origin__c">Order Type</label>
+						<select name="Origin__c" id="Origin__c">
+							{{Origin__c}}
+						</select>
+					</div>
+				
+					<div class="form-item form-item-BillToContactId">
+						<label for="BillToContactId">Bill To Contact</label>
+						<input type="text" name="BillToContactId" value="{{BillToContactId}}" id="BillToContactId" size="20" />
+					</div>
+				
+					<div class="form-item form-item-AuthorizeDotNetCustomerProfileId__c">
+						<label for="AuthorizeDotNetCustomerProfileId__c">AuthNet Profile ID</label>
+						<input type="text" name="AuthorizeDotNetCustomerProfileId__c" 
+						value="{{AuthorizeDotNetCustomerProfileId__c}}" id="AuthorizeDotNetCustomerProfileId__c" size="20" />
+					</div>
+				
+					<div class="form-item form-item-OrderNumber">
+						<label for="OrderNumber">Order #</label>
+						<input type="text" name="OrderNumber" value="{{OrderNumber}}" id="OrderNumber" size="20" />
+					</div>
+				
+					<div class="form-item form-item-TotalAmount">
+						<label>Amount</label>
+						<input type="text" name="TotalAmount" value="{{TotalAmountNumber}}" id="TotalAmount" size="12" />
+					</div>
+				
+					<div class="form-item form-item-BillingFirstName">
+						<label for="FirstName">Bill To Contact First</label>
+						<input type="text" name="BillingFirstName" value="{{BillToContact.FirstName}}" id="BillingFirstName" size="12" />
+					</div>
+				
+					<div class="form-item form-item-BillingLastName">
+						<label class="LastName">Bill To Contact Last</label>
+						<input type="text" name="BillingLastName" value="{{BillToContact.LastName}}" id="BillingLastName" size="20" />
+					</div>
+				</fieldset>
+				
+				<fieldset id="authorize__billing-info">
+					<legend>Billing Info</legend>
+					
+					<div class="billing-info-panel">
+
+						
+						<div class="form-item">
+							<label for="PostingEntity__c">Payment Type</label>
+							<select name="PostingEntity__c" id="PostingEntity__c">
+								{{PostingEntity__c}}
+							</select>
+						</div>
+						
+						<div class="form-item">
+							<label for="Payment_Info__c">Payment Notes (optional)</label>
+							<input type="text" id="Payment_Info__c" name="Payment_Info__c" value="{{Payment_Info__c}}" />
+						</div>
+					</div>
+					
+					
+
+					{{if(isPosted)}}
+						<div class="form-item">
+							<input id="card-999" type="radio" checked="checked" value="OrderBilling" name="paymentProfileId" />
+							<label for="card-999">On Order</label>
+						</div>
+						<div class="form-item">
+							<label for="authNetPaymentProfileId">AuthNet Payment Profile Id</label>
+							<select id="authNetPaymentProfileId" name="authNetPaymentProfileId">
+								{{PaymentProfileOptions}}							
+							</select>
+						</div>
+					{{fi}}
+					{{if(isDraft)}}
+						<div class="form-item">
+							<input id="card-999" type="radio" checked="checked" value="New Card" name="paymentProfileId" />
+							<label for="card-999">Order</label>
+							<input id="card-999" type="radio" value="ContactBilling" name="paymentProfileId" />
+							<label for="card-999">From Contact</label>
+						</div>
+						<div class="form-item">
+							<label for="authNetPaymentProfileId">AuthNet Payment Profile Id</label>
+							<select id="authNetPaymentProfileId" name="authNetPaymentProfileId">
+								{{PaymentProfileOptions}}							
+							</select>
+						</div>
+					{{fi}}
+					
+					<!--<div class="form-item form-item-AuthNetPaymentMethodDescription">
+						<label for="AuthNetPaymentMethodDescription">Payment Method Description</label>
+						<input type="text" name="AuthNetPaymentMethodDescription" value="My Default Card" id="AuthNetPaymentMethodDescription" size="30" />
+					</div>
+					-->
+					
+					{{if(hasOwnBilling)}}
+					<div class="form-item BillingStreet">
+						<label for="BillingStreet">Billing Street</label>
+						<input type="text" name="BillingStreet" value="{{BillingStreet}}" id="BillingStreet" size="25" />
+					</div>
+				
+					<div class="form-item form-item-BillingCity">
+						<label for="BillingCity">Billing City</label>
+						<input type="text" name="BillingCity" value="{{BillingCity}}" id="BillingCity" size="25" />
+					</div>
+				
+					<div class="form-item form-item-BillingState">
+						<label for="BillingState">Billing State</label>
+						<input type="text" name="BillingStateCode" value="{{BillingStateCode}}" id="BillingStateCode" size="2" />
+					</div>
+				
+					<div class="form-item form-item-BillingPostalCode">
+						<label for="BillingPostalCode">Billing Zip</label>
+						<input type="text" name="BillingPostalCode" value="{{BillingPostalCode}}" id="BillingPostalCode" size="10" />
+					</div>
+					
+					<div class="form-item form-item-BillingCountryCode">
+						<label for="BillingPostalCode">Billing Country</label>
+						<input type="text" name="BillingCountryCode" value="{{BillingCountryCode}}" id="BillingCountryCode" size="10" />
+					</div>
+				
+					<div class="form-item form-item-BillingEmail">
+						<label for="BillingEmail">Billing Email</label>
+						<input type="text" name="BillingEmail" value="{{BillToContact.Email}}" id="BillingEmail" size="40" />
+					</div>
+					{{fi}}
+					
+					{{if(notHasOwnBilling)}}
+					<div class="form-item MailingStreet">
+						<label for="BillingStreet">Billing Street</label>
+						<input type="text" name="BillingStreet" value="{{BillToContact.MailingStreet}}" id="BillingStreet" size="25" />
+					</div>
+				
+					<div class="form-item form-item-MailingCity">
+						<label for="BillingCity">Billing City</label>
+						<input type="text" name="BillingCity" value="{{BillToContact.MailingCity}}" id="BillingCity" size="25" />
+					</div>
+				
+					<div class="form-item form-item-MailingStateCode">
+						<label for="BillingStateCode">Billing State</label>
+						<input type="text" name="BillingStateCode" value="{{BillToContact.MailingStateCode}}" id="BillingStateCode" size="2" />
+					</div>
+				
+					<div class="form-item form-item-MailingPostalCode">
+						<label for="BillingPostalCode">Billing Zip</label>
+						<input type="text" name="BillingPostalCode" value="{{BillToContact.MailingPostalCode}}" id="BillingPostalCode" size="10" />
+					</div>
+					
+					<div class="form-item form-item-MailingCountryCode">
+						<label for="BillingCountryCode">Billing Country</label>
+						<input type="text" name="BillingCountryCode" value="{{BillToContact.MailingCountryCode}}" id="BillingCountryCode" size="10" />
+					</div>
+				
+					<div class="form-item form-item-BillingEmail">
+						<label for="BillingEmail">Billing Email</label>
+						<input type="email" name="BillingEmail" value="{{BillToContact.Email}}" id="BillingEmail" size="40" />
+					</div>
+					{{fi}}
+					
+					
+				
+
+					
+					<div class="form-item form-item-ccNum">
+						<label for="ccNum">Credit Card #</label>
+						<input type="text" name="ccNum" value="{{ccNum}}" id="ccNum" size="24" />
+					</div>
+					
+					<div class="form-item form-item-ccExp">
+						<label for="ccExp">Expiration Date</label>
+						<input type="text" name="ccExp" value="{{ccExp}}" id="ccExp" size="8" /><span>(e.g., "09/20")</span>
+					</div>
+					
+					<div class="form-item form-item-ccCode">
+						<label class="cvv">CVV</label>
+						<input type="text" name="ccCode" value="{{ccCode}}" id="ccCode" size="6">
+					</div>
+					
+				</fieldset>	
+					
+				<div id="billing-panel-separator"></div>
+					
+				<button id="ccCharge" data-action="authorize::purchase">Charge Card</button>
+				<button id="ccCharge" data-action="authorize::post">Post Order</button>
+				<button data-action="modal::cancel">Cancel</button>
+					
+			</form>
+		</div><!-- end primary tab -->
+	
+	</div><!-- end tabs -->
+</div>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+	<head></head>
+	<body>
+
+		<style type="text/css">
+			.form-item {
+				padding:5px;
+			}
+		
+			fieldset {
+				display:inline-block;
+				vertical-align:top;
+			}
+		
+			label {
+				margin-right:8px;
+			}
+		
+			label:after {
+				content: ': ';
+			}
+		
+			input[type="radio"] + label:after {
+				content: '';
+			}
+		
+			label + input[type="radio"] {
+				margin-right:4px;
+			}
+		
+			.order-total,.order-contact {
+				font-size: 1.4em;
+			}
+		
+			a:link, a:visited, a:active {
+				color:blue;
+				text-decoration:none;
+			}
+		
+			a:hover {
+				text-decoration:hover;
+			}
+		
+			.modal-content {
+				position:relative;
+			}
+		
+			.modal-order-status {
+				position:absolute;
+				top:0px;
+				right:0px;
+			}
+		
+			.form-item-hidden {
+				display:none;
+			}
+		
+			.activated-date {
+				color:red;
+			}
+		</style>
+	
+
+		<div id="modal-new-order" class="modal-content">
+
+			<div class="modal-title">New Order...</div>
+			
+			<form id="new-order-form" autocomplete="off">
+				<input type="hidden" autocomplete="false" name="hidden" style="display:none;" />
+				<input type="hidden" autocomplete="off" name="hidden" style="display:none;" />	
+				
+				<div class="form-item">
+					<input autocomplete="false" type="hidden" name="BillToContactId" value="" />
+					<input autocomplete="false" type="hidden" name="AccountId" value="" />
+				</div>
+	
+				<div class="form-item">
+					<label for="BillToContactName">Bill To Contact</label>
+					<input autocomplete="off" type="text" id="BillToContactName" name="BillToContactName" value="{{BillToContact.Name}}" />
+				</div>
+				
+				<div class="form-item">
+					<label for="AccountName">Account</label>
+					<input autocomplete="off" type="text" id="AccountName" name="AccountName" value="{{Account.Name}}" />
+				</div>
+				
+				<div class="form-item">
+					<select name="Status" id="Status">
+						<option value="Draft" selected="selected">Draft</option>
+					</select>
+				</div>
+	
+				<div class="form-item">
+					<select name="Origin__c">
+						<option selected="selected" value="Admin Order">Admin Order</option>
+						<option value="Web Order">Web Order</option>
+						<option value="Test Order">Test Order</option>
+					</select>
+				</div>
+				
+				<div id="billing-panel-separator"></div>
+				
+				<button id="createOrder" data-action="order::create">Create Order</button>
+				<button data-action="modal::cancel">Cancel</button>
+		</form>
+			
+			
+		</div>
+		
+	</body>
+</html>

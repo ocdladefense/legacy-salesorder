@@ -1,0 +1,505 @@
+#order-picker {
+	display:inline-block;
+	width:20%;
+	vertical-align:top;
+}
+
+			
+			.picker-item {
+				height: auto;
+				cursor:pointer;
+				padding:6px;
+			}
+			
+			.contact-picker-item {
+				height: 35px;
+				cursor: pointer;
+				padding:6px;
+			}
+			
+			.picker-item:hover {
+				background-color:rgba(240,240,240,0.8);
+			}
+
+.resizing {
+	cursor: e-resize !important;
+}
+
+
+.sales-order-contacts-form {
+	min-width: 400px;
+}
+
+.sales-order-contacts-form .form-item-checkbox {
+	display: inline-block;
+	width:30%;
+}
+
+.modal-pane {
+	display:block;
+	width:45%;
+	float:left;
+	padding:15px;
+	border-left:1px solid #666;
+	margin-left:15px;
+}	
+
+.modal-pane-first {
+	border-left:0px solid transparent;
+	margin-left:0px;
+}
+
+
+.content {
+	z-index: 10;
+}
+
+#right {
+	display:none;
+}
+
+.appHeader {
+	height:100px;
+}
+
+/**
+ * Sales Order Form modal
+ */
+.application-modal {
+	position:absolute;
+	display:none;
+	top:3%;
+	left:20%;
+	display:none;
+	width:auto;
+	height:auto;
+	border-radius:3px;
+	border:1px solid #666;
+	background-color:#fff;
+	box-shadow:1px 1px 3px #999;
+	padding: 15px 15px 50px;
+	z-index:10;
+	min-width:700px;
+}
+
+.offline-deleted input,
+.offline-deleted textarea,
+.offline-deleted option
+{
+	text-decoration: line-through;
+}
+
+.modal-bg {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:-1;
+}
+
+.modal-title {
+	font-size: 1.68em;
+}
+
+.application-modal.visible {
+	display:block;
+}
+
+.application-modal .sales-order-form {
+	top:25px;
+	border:1px solid #ccc;
+	margin-top:30px;
+	padding:5px;
+}
+
+.application-modal .form-item {
+	margin-top:15px;
+}
+
+.ccActive .application-modal .form-item {
+	float:left;
+	margin-left:25px;
+}
+
+.form-item.amount {
+	clear:both;
+}
+
+.ccActive input[type="submit"] {
+	clear:both;
+}
+
+input[type="submit"] {
+	display:inline-block;
+}
+
+#billing-panel-separator {
+	border-top:1px solid #666;
+	height:15px;
+	padding:5px;
+	margin-top:8px;
+	clear:both;
+}
+
+.application-modal label {
+	display:block;
+	font-weight:bold;
+	margin-top:6px;
+}
+
+.application-modal .modal-actions {
+	margin-top:15px;
+	position:absolute;
+	bottom:5px;
+	left:5px;
+}
+
+.
+
+
+
+html, body {
+    width:100%;
+}
+
+.bodyDiv.hasModal .modal-bg {
+	background-color: rgba(0,0,0,0.5);
+	background-image: none;
+	display:block;
+	z-index:1;
+}
+
+#order-items .loading {
+	background-color:#fff;
+	background-image:url('/sites/default/modules/salesorder/images/ajax-loader-large.gif');
+	background-repeat:no-repeat;
+	background-size:auto;
+	background-attachment:scroll;
+	background-position:center center;
+	display:none;
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+}
+
+#order-items .loading.visible {
+	display:block;
+}
+
+#sales-order-stage {
+	min-width:15%;
+	max-width:50%;
+	width:15%;
+	height:auto;
+	float:left;
+	overflow-y:hidden;
+	max-height:450px;
+	border-bottom:1px solid #666;
+	border-right:3px solid #999;
+	margin-right:10px;
+	padding-right:8px;
+}
+
+#sales-order-stage .stage-container {
+	overflow-x:hidden;
+	overflow-y:scroll;
+	margin-right:7px;
+	height:800px;
+	z-index:5;
+}
+
+#order-items {
+	width:75%;
+	overflow-x:scroll;
+	position:relative;
+	min-height:600px;
+	vertical-align:top;
+	display:inline-block;
+}
+
+
+
+.sales-order-card {
+	overflow: hidden;
+	border:1px solid #666;
+	padding:8px;
+	opacity:0.8;
+	display:inline-block;
+	cursor:pointer;
+	height:100%;
+	position:relative;
+	margin-right:3px;
+}
+
+.sales-order-mini-card {
+	overflow: hidden;
+	border:1px solid #eee;
+	padding:8px;
+	display:inline-block;
+	cursor:pointer;
+	position:relative;
+	max-width:200px;
+	width:150px;
+	height:60px;
+	border-radius:3px;
+	font-size:11px;
+}
+
+ul.sales-order-mini-card {
+	margin:0px !important;
+}
+
+.billing-contact {
+	font-size:12px;
+}
+
+#sales-order-display-header {
+	height:50px;
+}
+
+.sales-order-mini-card .order-label {
+	position:relative;
+	border-radius: 4px;
+	padding:6px;
+	height:15px;
+}
+
+.sales-order-mini-card.order-status-Draft .order-label,
+.sales-order-mini-card.order-status-Attempted .order-label {
+	background-color:yellow;
+}
+
+.sales-order-mini-card.order-status-Activated .order-label,
+.sales-order-mini-card.order-status-Posted .order-label {
+	background-color:green;
+	color:#fff;
+}
+
+.sales-order-mini-card .order-number {
+	position:absolute;
+	left:5px;
+	font-weight:bold;
+}
+
+.active-order {
+	border:1px solid #000;
+}
+
+.sales-order-mini-card .order-date {
+	position:absolute;
+	right:5px;
+}
+
+
+
+.sales-order-mini-card .sales-order-total {
+
+}
+
+.sales-order-name {
+	font-size:9px;
+}
+
+.sales-order-mini-card-click {
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:10;
+	background-color:transparent;
+}
+
+.sales-order-mini-card:hover {
+	border:1px solid #999;
+	background-color:rgba(240,240,240,0.6);
+}
+
+
+.sales-order-card:hover {
+	background-color:#eee;
+	opacity:1.0;
+}
+
+.sales-order-active {
+	opacity:1.0;
+	background-color:#ccc;
+}
+
+.sales-order-active .sales-order-label {
+	background-color:green;
+	color:#fff;
+}
+
+.modal-content-pane {
+	display:inline-block;
+	min-width:200px;
+	width:auto;
+	border-right:1px solid #ccc;
+	margin-right:10px;
+	padding:8px;
+}
+
+#sessionOrders {
+	position:static;
+	text-align:left;
+	width:100%;
+}
+
+.so-menu {
+	position:static;
+	text-align:right;
+	height: 45px;
+	margin-right: 75px;
+	margin-top: 15px;
+}
+
+.ui-front {
+	box-shadow: 3px 3px 5px 3px #666;
+	border: 1px solid #333;
+	padding-left:5px;
+	padding-top:10px;
+}
+
+
+.so-menu button {
+	cursor:pointer;
+}
+
+.AccountPickList {
+	font-size:2.0em;
+}
+
+
+.updating .actions {
+ 		background-attachment: scroll;
+    background-image: url("https://membertest.ocdla.org/sites/all/modules/cart/images/ajax-loader.gif");
+    background-position: 3px center;
+    background-repeat: no-repeat;
+    background-size: 20% auto;
+}
+
+h2, h3 {
+	display:block;
+}
+
+
+
+.sales-order-summary {
+	margin-top:25px;
+	padding:15px;
+	padding-top:25px;
+}
+
+.row.header {
+	font-weight:bold;
+}
+
+fieldset {
+	margin-top:20px;
+}
+
+
+
+.caption {
+    display:table-caption;
+    caption-side:bottom;
+    border:1px solid grey;
+}
+
+.autocomplete ul {
+	
+}
+
+.view-more {
+	float:right;	
+}
+
+
+
+/* column widths */
+
+.actions {
+	padding-left:35px !important;
+	width:60px;
+}
+
+.line-item-price-override {
+	width:30px;
+}
+
+.line-item-id {
+	width: 40px;
+}
+
+.line-item-name {
+	width: 110px;
+}
+
+.line-item-item {
+	width:150px;
+}
+
+.line-item-qty {
+	width: 30px;
+}
+
+.line-item-price {
+	width: 60px;
+}
+
+.line-item-subtotal {
+	width: 60px;
+}
+
+.line-item-description {
+
+}
+
+.line-item-note {
+	width:45px;
+} 
+
+.locked {
+	background-color:#ccc !important;
+}
+
+.row {
+  -webkit-transition: max-height 1s; 
+  -moz-transition: max-height 1s; 
+  -ms-transition: max-height 1s; 
+  -o-transition: max-height 1s; 
+  transition: max-height 1s;  
+  overflow: hidden;
+  /* "height: 0" not work with css transitions */
+  max-height: none;
+}
+
+.online-deleted {
+	max-height:0px;
+	display:none;
+}
+
+
+
+#order-items .ui-menu {
+	max-height:225px;
+	min-width:160px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+
+
+
+.autocomplete-details {
+	font-size:10px;
+}
+
+.sales-order-posted {
+	background-image: url('../images/posted.png');
+	background-position: right 10px bottom 10px;
+	background-size: 15%;
+	background-repeat:no-repeat;
+}

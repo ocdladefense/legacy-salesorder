@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Format for Order cards</title>
+	</head>
+	<body>
+	
+		<ul data-order-id="{{Id}}" class="order-{{Id}} sales-order-mini-card order-status-{{theStatus}}">
+			<div class="order-label">
+				<!--<div class="sales-order-mini-card-click" data-route-path="load-order" data-route-data="{{Id}}">&nbsp;</div>-->
+
+				<div class="order-number">
+					#{{OrderNumber}}
+				</div> 
+				<div class="order-date">{{CreatedDateOnly}}</div>
+			
+
+			</div>
+
+
+			<div class="mini-card-content">
+			
+				<div class="billing-contact">
+					{{Account.Name}}
+				</div> 
+				
+				<div class="order-TotalAmount">
+					{{TotalAmount}}
+				</div> 
+				
+				
+			</div>
+
+		
+	
+				<!--{{PostingEntity__c}}-->
+
+
+	<!--
+				Status: <span class="sales-order-status">{{Status}}</span>
+
+				Origin: <span class="sales-order-origin">{{Origin__c}}</span>
+				-->
+			</div>
+		</ul>
+		
+	</body>
+</html>
