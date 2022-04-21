@@ -79,19 +79,13 @@ define(['view-core/view-core','order/order',"libData",'salesforce/salesforce','s
 		var ccData = currentScopes.billing = ccFormData.ccData();
 		
 		var promiseAction = Promise.resolve(ccData);
-		
-		
-		/*
-		require(actions[action].modules,function(){
-		
-		});
-		*/
+
 		
 		switch(action){
 		
 			case 'authorize::purchase':
 				promiseAction = promiseAction.then((ccData) => {
-					return charge.payNow('//'+AppSettings.domain+'/ccAuthorize',libData.getAsUrlEncoded(ccData));
+					return charge.payNow('//'+AppSettings.domain+'/orderEntry/ccAuthorize',libData.getAsUrlEncoded(ccData));
 				})
 				.then(charge.checkAuthNetResponse)
 				.then((auth) => {
