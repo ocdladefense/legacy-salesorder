@@ -28,7 +28,7 @@ let rowQuery = 'ul';
 
 let ORDER_NO_CHANGE =   ()=>0; // function(a,b) { return 0; };
 
-domready(setupRows);
+
 
 
 
@@ -102,12 +102,28 @@ function rowHandler(e) {
 
 	let label = e.target;
 	let container = label.closest(contain);
+	let labels = label.closest("ul.row").querySelectorAll("li.cell");
 
-	console.log(container);
 	
 	let rows = Array.from(container.querySelectorAll(rowQuery));
+
+	let index = null;
+
+	let fn = function(node, i) {
+		if(node.contains(label)) {
+			index = i;
+		}
+	};
+
+
+	console.log(label);
+	
+	labels.forEach(fn);
+	console.log(index);
+	let comparator = getComparator(++index, SORT_ASC = !SORT_ASC);
+
 	rows.shift(); // Remove the header row.
-	rows = orderRows(rows);
+	rows = orderRows(rows, comparator);
 
 	updateView(rows, container);
 	return false;
