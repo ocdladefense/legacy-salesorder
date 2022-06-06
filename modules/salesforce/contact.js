@@ -18,7 +18,7 @@ define(['salesforce/salesforce'],function(salesforce){
 	
 	var saveContact = function(id,fields){
 		return salesforce.invokeAction('OrderEntryController','saveContactFields',[id,fields]).then((result) => {
-			log('Contact saved with fields: ',fields);
+			console.log('Contact saved with fields: ',fields);
 			return result;
 		});
 	};
