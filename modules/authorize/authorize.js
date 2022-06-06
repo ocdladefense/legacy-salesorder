@@ -85,7 +85,7 @@ define(['view-core/view-core','order/order',"libData",'salesforce/salesforce','s
 		
 			case 'authorize::purchase':
 				promiseAction = promiseAction.then((ccData) => {
-					return charge.payNow('//'+AppSettings.domain+'/orderentry/ccauthorize',libData.getAsUrlEncoded(ccData));
+					return charge.payNow('//'+AppSettings.domain+'/ccauthorize',libData.getAsUrlEncoded(ccData));
 				})
 				.then(charge.checkAuthNetResponse)
 				.then((auth) => {
