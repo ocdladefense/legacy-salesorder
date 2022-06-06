@@ -22,13 +22,13 @@ define(["order/order"],function(order){
 			// showMessage('Loading Sales Order...');
 
 			//iDataManager.getDataSource('force').getStore('getLineItems')
-			order.getOrder(id).then( (sobject) => {
+			return order.getOrder(id).then( (sobject) => {
 				return sobject.loadItems();
 			})
 			.then( (sobject) => {
 				log(sobject);
 				this.salesOrderObject = sobject;
-				order.render(sobject);
+				return order.render(sobject);
 			});
 		},
 	

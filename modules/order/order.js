@@ -25,7 +25,7 @@ define(["libFormat","libDatetime","salesforce/salesforce","order/order-item/orde
 
 
 	var render = function(order) {
-		getDocument('order').then((tpl) => {
+		return getDocument('order').then((tpl) => {
 			return view.parse(tpl,order,{replaceAll:true});		
 		})
 		.then( (html)=> {
