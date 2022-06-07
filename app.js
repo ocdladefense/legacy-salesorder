@@ -200,7 +200,7 @@ requirejs(['event/event-manager','view-core/view-core','order/order','order/cont
 		domready(function() {
 			controller.load(App.currentOrderId)
 			.then(async function() {
-				let { default: Table } = await import("https://membertest.ocdla.org/sites/default/modules/salesorder/modules/ui/table/table.js");
+				let { default: Table } = await import("https://"+App.domain+"/sites/default/modules/salesorder/modules/ui/table/table.js");
 				console.log(Table);
 				let sort = new Table(".order-table");
 			});
