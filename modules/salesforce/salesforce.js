@@ -104,6 +104,11 @@ define(["settings","libVisualforceRemoting"],function(config,remoting){
 					field: "Product2.ClickpdxCatalog__IsParent__c",
 					op: "!=",
 					value: 'True'
+				},
+				{
+					field: "Product2.IsActive",
+					op: "=",
+					value: 'True'
 				}
 			],
 			sObjectName: "PricebookEntry"
